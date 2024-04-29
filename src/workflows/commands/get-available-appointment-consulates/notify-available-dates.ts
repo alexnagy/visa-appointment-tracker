@@ -1,9 +1,7 @@
-import buildTwilioClient from 'twilio';
 import * as dateFns from 'date-fns';
 import * as Eta from 'eta';
 import WorkflowCommand from '@/workflow-command';
 import { GetAvailableAppointmentConsulatesExecutionState } from '@/workflows/execution-states';
-import { SayLanguage } from 'twilio/lib/twiml/VoiceResponse';
 import { AppointmentConsulate, AppointmentDate } from '@/types';
 
 export default class NotifyAvailableDatesWorkflowCommand extends WorkflowCommand<GetAvailableAppointmentConsulatesExecutionState> {
@@ -118,21 +116,21 @@ export default class NotifyAvailableDatesWorkflowCommand extends WorkflowCommand
 
     this.logger.debug(`Notifying the following message: "${message}"`, { messageTemplateVariables });
 
-    const twilioClient = buildTwilioClient(twilioAccountSid, twilioAuthToken);
-    const twiml = new buildTwilioClient.twiml.VoiceResponse();
-    twiml.say(
-      {
-        language: <SayLanguage>visaNotificationMessageLang,
-        loop: 5,
+    const response = await fetch('https://textbelt.com/text', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
       },
-      message
-    );
-
-    await twilioClient.calls.create({
-      twiml: twiml.toString(),
-      from: twilioCallerNumber,
-      to: twilioReceiverNumber,
+      body: JSON.stringify({
+        'phone': twilioReceiverNumber,
+        'message': message,
+        'key': twilioAuthToken,
+        }),
     });
+
+    if (!response.ok) {
+      this.logger.error(`HTTP error! status: ${response.status} message: ${response.statusText}`);
+    }
   }
 
   private buildEarliestAppointmentDateFromAppointmentConsulates(
