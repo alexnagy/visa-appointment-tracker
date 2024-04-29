@@ -18,7 +18,7 @@ This app is not stable nor production-ready. It deeply relies on the Routing and
 
 We aren't constantly monitoring this app health.
 
-Feel free to open [an Issue](https://github.com/dhyegocalota/visa-appointment-tracker/issues/new) in case of the app misbehave.
+Feel free to open [an Issue](https://github.com/alexnagy/visa-appointment-tracker/issues/new) in case of the app misbehave.
 
 ## Prerequisites
 1. Install `Node >=18.0.0`
@@ -95,7 +95,7 @@ This app should be easy enough to deploy to any production environment that supp
 ### Heroku
 We encourage using Heroku to deploy this app due to the ease of just clicking in the deploy button below and making sure to configure the [environment variables](#environment-variables).
 
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/dhyegocalota/visa-appointment-tracker/tree/main)
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/alexnagy/visa-appointment-tracker/tree/main)
 
 *Notice that this app does not use a `web` dyno.*
 
@@ -163,7 +163,7 @@ We use Typing through TypeScript which enables developers to quickly understand 
 ## Contributions
 This was a hobby project born out of real needs and there was no funding budget at all.
 
-All kinds of contributions or constructive usage feedbacks are encouraged. Please feel free to [create an Issue](https://github.com/dhyegocalota/visa-appointment-tracker/issues/new), or opening a Pull Request, or even to contribute answering someone else's Issues.
+All kinds of contributions or constructive usage feedbacks are encouraged. Please feel free to [create an Issue](https://github.com/alexnagy/visa-appointment-tracker/issues/new), or opening a Pull Request, or even to contribute answering someone else's Issues.
 
 We'll do our best to review new Issues and Pull Requests ASAP.
 
