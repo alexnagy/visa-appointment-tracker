@@ -27,14 +27,12 @@ export default class NotifyAvailableDatesWorkflowCommand extends WorkflowCommand
             end: maxPreferredDate,
           });
 
-          if (this.config.isVerbose) {
-            this.logger.debug('Checking if available date is within the preferred period...', {
-              availableDate,
-              minPreferredDate,
-              maxPreferredDate,
-              isPreferredDate,
-            });
-          }
+          this.logger.info(`Checking if available date for ${consulate.cityName} is within the preferred period...`, {
+            availableDate,
+            minPreferredDate,
+            maxPreferredDate,
+            isPreferredDate,
+          });
 
           return isPreferredDate;
         }),
@@ -56,14 +54,14 @@ export default class NotifyAvailableDatesWorkflowCommand extends WorkflowCommand
     });
 
     if (totalOfAvailableDates > 0) {
-      loggerWithPreferredAvailableDates.debug(`Notifying ${totalOfAvailableDates} available dates...`);
+      loggerWithPreferredAvailableDates.info(`Notifying ${totalOfAvailableDates} available dates...`);
       await this.notifyAppointmentConsulatesWithAvailableDatesWithinPreferredPeriod(
         consulatesWithSomePreferredAvailableDate
       );
       return;
     }
 
-    loggerWithPreferredAvailableDates.debug('Skipping notification...');
+    loggerWithPreferredAvailableDates.info('Skipping notification...');
   }
 
   private buildMinPreferredDate(): Date {
@@ -114,7 +112,7 @@ export default class NotifyAvailableDatesWorkflowCommand extends WorkflowCommand
 
     const message = <string>Eta.render(visaNotificationMessage, messageTemplateVariables);
 
-    this.logger.debug(`Notifying the following message: "${message}"`, { messageTemplateVariables });
+    this.logger.info(`Notifying the following message: "${message}"`, { messageTemplateVariables });
 
     const response = await fetch('https://textbelt.com/text', {
       method: 'POST',

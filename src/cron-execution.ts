@@ -23,7 +23,7 @@ export default class CronExecution {
       throw new Error('Cron has already started');
     }
 
-    this.logger.debug('Starting cron...');
+    this.logger.info('Starting cron...');
     this.scheduledTask = cron.schedule(this.cronExpression, () => {
       this.execute();
     });
@@ -34,7 +34,7 @@ export default class CronExecution {
       throw new Error('Cron has not started');
     }
 
-    this.logger.debug('Stopping cron...');
+    this.logger.info('Stopping cron...');
     this.scheduledTask.stop();
     this.scheduledTask = undefined;
   }

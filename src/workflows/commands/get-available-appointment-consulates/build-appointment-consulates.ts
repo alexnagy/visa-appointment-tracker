@@ -51,7 +51,7 @@ export default class BuildAppointmentConsulatesWorkflowCommand extends WorkflowC
       const didConsulateAvailableDatesResponseSucceeded = [200, 304].includes(consulateAvailableDatesResponse.status());
 
       if (!didConsulateAvailableDatesResponseSucceeded) {
-        consulateLogger.debug('Consulate available dates request has failed', {
+        consulateLogger.error('Consulate available dates request has failed', {
           response: consulateAvailableDatesResponse,
         });
 
@@ -67,7 +67,7 @@ export default class BuildAppointmentConsulatesWorkflowCommand extends WorkflowC
       });
 
       if (!availableDates.length) {
-        consulateLogger.debug('Consulate available dates list is empty. Did you get soft-banned?', {
+        consulateLogger.info(`${cityName} consulate available dates list is empty. Did you get soft-banned?`, {
           response: consulateAvailableDatesResponse,
         });
       }

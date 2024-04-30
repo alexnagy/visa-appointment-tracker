@@ -37,7 +37,7 @@ export default class RetryExecution<TExecutionOutput> implements Execution<TExec
   }
 
   private beforeAttempt = (context: AttemptContext, options: AttemptOptions<TExecutionOutput>) => {
-    this.logger.debug(`Executing attempt number ${context.attemptNum + 1} of ${options.maxAttempts}...`);
+    this.logger.info(`Executing attempt number ${context.attemptNum + 1} of ${options.maxAttempts}...`);
 
     if (this.retryOptions?.beforeAttempt) {
       this.retryOptions.beforeAttempt(context, options);

@@ -46,7 +46,7 @@ export default abstract class Workflow<
   async retryableExecute(): Promise<void> {
     try {
       this.executionState.init();
-      this.logger.debug('Initializing workflow...');
+      this.logger.info('Initializing workflow...');
 
       const page = await this.getOrBuildPage();
       const commands = this.buildCommands({
@@ -65,7 +65,7 @@ export default abstract class Workflow<
       await this.destroyPage();
       await this.destroyBrowser();
 
-      this.logger.debug('Finishing workflow...');
+      this.logger.info('Finishing workflow...');
       this.executionState.finish();
     }
   }
@@ -90,11 +90,11 @@ export default abstract class Workflow<
     for (const nextCommand of commands) {
       this.executionState.nextCommand();
 
-      this.logger.debug('Initializing workflow command...');
+      this.logger.info('Initializing workflow command...');
 
       await nextCommand.execute();
 
-      this.logger.debug('Finishing workflow command...');
+      this.logger.info('Finishing workflow command...');
     }
   }
 
@@ -109,7 +109,7 @@ export default abstract class Workflow<
   protected async buildPage(): Promise<Page> {
     const browser = await this.getOrBuildBrowser();
 
-    this.logger.debug('Initializing browser page...');
+    this.logger.info('Initializing browser page...');
     const [page] = await browser.pages();
     page.setDefaultTimeout(this.config.defaultPuppeteerTimeout);
 
@@ -126,7 +126,7 @@ export default abstract class Workflow<
 
   private buildBrowser(): Promise<Browser> {
     const browserOptions = this.buildBrowserOptions();
-    this.logger.debug('Launching browser...', { browserOptions });
+    this.logger.info('Launching browser...', { browserOptions });
 
     return puppeteer.launch(browserOptions);
   }
@@ -150,7 +150,7 @@ export default abstract class Workflow<
       throw new Error('Page has not been initializsed');
     }
 
-    this.logger.debug('Destroying browser page...');
+    this.logger.info('Destroying browser page...');
     await this.page.close();
     this.page = undefined;
   }
@@ -160,7 +160,7 @@ export default abstract class Workflow<
       throw new Error('Browser has not been initializsed');
     }
 
-    this.logger.debug('Destroying browser...');
+    this.logger.info('Destroying browser...');
     await this.browser.close();
     this.browser = undefined;
   }
